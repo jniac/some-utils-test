@@ -2,20 +2,33 @@ import tap from 'tap'
 import { Interval } from '../../some-utils/geom/Interval'
 
 tap.test('set, safeSet, equals, equivalent', test => {
-  
+
+  // default interval is [0, 1]
+  test.equal(new Interval().equivalent([0, 1]), true)
+
   const interval = new Interval(10, 12)
   test.equal(Interval.ensure(interval), interval) // ensure should return the same reference, when the reference is an instance of Interval
   test.equal(interval.equals(new Interval(10, 12)), true)
   test.equal(interval.equivalent([10, 12]), true)
-  test.equal(new Interval().set(12, 10, { mode: 'swap'}).equivalent([10, 12]), true)
-  test.equal(new Interval().set(12, 10, { mode: 'collapse'}).equivalent([11, 11]), true)
-  test.equal(new Interval().set(12, 10).equivalent([11, 11]), true)
-  test.equal(new Interval().set({ min: 12, max: 10 }).equivalent([11, 11]), true)
+  test.equal(new Interval(12, 10, { mode: 'swap'}).equivalent([10, 12]), true)
+  test.equal(new Interval(12, 10, { mode: 'collapse'}).equivalent([11, 11]), true)
+  test.equal(new Interval(12, 10).equivalent([11, 11]), true)
+  test.equal(new Interval({ min: 12, max: 10 }).equivalent([11, 11]), true)
+  test.equal(new Interval({ min: 12, max: 10 }).equivalent([11, 11]), true)
+  test.equal(new Interval({ center: 10, length: 4 }).equivalent([8, 12]), true)
   test.equal(new Interval(10, 12).set({}).equivalent([0, 1]), true)
   // @ts-ignore
   test.throws(() => new Interval().set(3))
   test.end()
   
+})
+
+tap.test('getter', test => {
+
+  test.equal(new Interval(10, 12).center, 11)
+  test.equal(new Interval(10, 12).length, 2)
+  test.end()
+
 })
 
 tap.test('isDegenerate', test => {
@@ -49,11 +62,18 @@ tap.test('union, intersection', test => {
 
 })
 
-tap.test('distance', test => {
+tap.test('distance, uncovered', test => {
 
   test.equal(new Interval(10, 12).signedDistanceToValue(8), -2)
   test.equal(new Interval(10, 12).signedDistanceToValue(15), 3)
   test.equal(new Interval(10, 12).signedDistanceToValue(11), 0)
+  test.equal(new Interval(10, 12).signedDistance([4, 7]), -3)
+  test.equal(new Interval(10, 12).signedDistance([14, 17]), 2)
+  test.equal(new Interval(10, 12).signedDistance([11, 13]), 0)
+  test.equal(new Interval(10, 12).signedGreatestDistance([4, 7]), -5)
+  test.equal(new Interval(10, 12).signedGreatestDistance([14, 17]), 4)
+  test.equal(new Interval(10, 14).uncoveredLength([11, 15]), 1)
+  test.equal(new Interval(10, 14).uncoveredRatio([11, 15]), 0.25)
   test.end()
 
 })

@@ -6,10 +6,13 @@
   "author": "Joseph Merdrignac <joseph.merdrignac@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "tap --ts"
+    "test": "tap --ts",
+    "build": "tsc --project tsconfig-geom.json",
+    "start": "scripts/dev.mjs"
   },
   "dependencies": {
     "@types/tap": "^15.0.5",
+    "chokidar": "^3.5.3",
     "tap": "^15.1.6",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5"

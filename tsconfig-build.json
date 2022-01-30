@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/some-utils/geom/"],
+  "compilerOptions": {
+    "module": "ES2022",
+    "declaration": true,
+    "moduleResolution": "Node",
+    "outDir": "public/some-utils/geom/"
+  },
+}
