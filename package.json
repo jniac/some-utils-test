@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@types/tap": "^15.0.5",
+    "chalk": "4.1.2",
     "chokidar": "^3.5.3",
     "tap": "^15.1.6",
     "ts-node": "^10.4.0",

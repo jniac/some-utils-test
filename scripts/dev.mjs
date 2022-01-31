@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import chalk from 'chalk'
 import chokidar from 'chokidar'
 import { spawn } from './src/spawn.mjs'
 
@@ -23,6 +24,8 @@ const test = async () => {
 
 const main = async () => {
 
+  spawn(`serve -p 3030`)
+
   chokidar.watch('src/some-utils').on('change', path => {
     console.log(`change: ${path}`)
     build()
@@ -32,6 +35,8 @@ const main = async () => {
     console.log(`change: ${path}`)
     test()
   })
+
+  console.log(chalk`watching {blue src/some-utils} & {blue src/some-tests}...`)
 }
 
 main()
