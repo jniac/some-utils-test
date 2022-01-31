@@ -72,8 +72,9 @@ tap.test('distance, uncovered', test => {
   test.equal(new Interval(10, 12).signedDistance([11, 13]), 0)
   test.equal(new Interval(10, 12).signedGreatestDistance([4, 7]), -5)
   test.equal(new Interval(10, 12).signedGreatestDistance([14, 17]), 4)
-  test.equal(new Interval(10, 14).uncoveredLength([11, 15]), 1)
-  test.equal(new Interval(10, 14).uncoveredRatio([11, 15]), 0.25)
+  test.equal(new Interval(10, 14).coverLength([-10, 8]), 0)
+  test.equal(new Interval(10, 14).coverLength([11, 15]), 3)
+  test.equal(new Interval(10, 14).coverRatio([11, 15]), 0.75)
   test.end()
 
 })

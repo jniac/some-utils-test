@@ -98,14 +98,16 @@ export const createInterval = ({
   
   const innerInterval = Interval.ensure(interval)
   
-  const parent = create('g', { fill: color })
+  const parent = create('g', { 
+    fill: color, 
+    strokeWidth,
+  })
   
   const line = createLine({
     x1: innerInterval.min,
     x2: innerInterval.max,
     y,
     stroke: color,
-    strokeWidth,
     parent,
   })
 
