@@ -1,7 +1,7 @@
 import * as cp from 'child_process'
 
 /**
- * Spawn use one line of arguments, split into command and args.
+ * Spawn use one line of arguments, split afterwards into command and args.
  * @param {string} line 
  */
 export const spawn = (line, {

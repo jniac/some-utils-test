@@ -67,7 +67,12 @@ export const create = (type, {
   const element = document.createElementNS('http://www.w3.org/2000/svg', type)
   parent.append(element)
   setAttributes(element, props)
-  return element
+  const update = props => setAttributes(element, props)
+  const instance = {
+    element,
+    update,
+  }
+  return instance
 }
 
 export const createLine = ({
@@ -76,7 +81,7 @@ export const createLine = ({
   onFrame = null,
   ...props
 } = {}) => {
-  const line = create('line', { x1, y1, x2, y2, ...props })
+  const { element: line } = create('line', { x1, y1, x2, y2, ...props })
   const instance = {
     update: props => setAttributes(line, props)
   }
@@ -98,7 +103,7 @@ export const createInterval = ({
   
   const innerInterval = Interval.ensure(interval)
   
-  const parent = create('g', { 
+  const { element: parent } = create('g', { 
     fill: color, 
     strokeWidth,
   })
@@ -121,7 +126,7 @@ export const createInterval = ({
       texts.pop().remove()
     }
     while (texts.length < lines.length) {
-      const text = create('text', { parent, textAnchor: 'middle' })
+      const { element: text } = create('text', { parent, textAnchor: 'middle' })
       texts.push(text)
     }
     for (const [index, line] of lines.entries()) {

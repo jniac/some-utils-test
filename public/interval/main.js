@@ -1,14 +1,25 @@
 import { Interval } from '../some-utils/geom/index.js'
-import { createInterval } from '../common/svg.js'
+import { create, createInterval } from '../common/svg.js'
 import '../common/cheat.js'
 
 const i1 = createInterval({
   interval: new Interval(200, 340),
   y: 60,
-  onFrame: ({ update }) => {
-    const strokeWidth = i1.interval.contains(pointer.interval) ? 3 : 1
-    update({ strokeWidth })
+  onFrame: ({ update }) => {  
+    const active = i1.interval.contains(pointer.interval)
+    const strokeWidth = active ? 3 : 1
+    const color = active ? 'red' : 'black'
+    const fill = active ? '#f001' : '#0001'
+    update({ color, strokeWidth })
+    r1.update({ fill })
   },
+})
+
+const r1 = create('rect', {
+  x: i1.interval.min,
+  width: i1.interval.length,
+  height: 800,
+  fill: '#0001',
 })
 
 const pointer = createInterval({
