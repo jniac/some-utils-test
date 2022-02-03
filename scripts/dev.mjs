@@ -37,6 +37,8 @@ const main = async () => {
   })
 
   console.log(chalk`watching {blue src/some-utils} & {blue src/some-tests}...`)
+
+  build()
 }
 
 main()
