@@ -1,6 +1,6 @@
-import { Interval } from '../some-utils/geom/index.js'
-import { create, createInterval } from '../common/svg.js'
-import '../common/cheat.js'
+import { Interval } from '../../some-utils/geom/index.js'
+import { create, createInterval } from '../../common/svg.js'
+import '../../common/cheat.js'
 
 const i1 = createInterval({
   interval: new Interval(200, 340),

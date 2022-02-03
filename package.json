@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "test": "tap --ts",
-    "build": "tsc --project tsconfig-geom.json",
+    "build": "scripts/build.mjs",
     "start": "scripts/dev.mjs"
   },
   "dependencies": {
