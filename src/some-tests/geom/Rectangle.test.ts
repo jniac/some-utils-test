@@ -110,6 +110,10 @@ tap.test('union, intersection, signedDistance', test => {
   test.same(new Rectangle().signedDistance(new Rectangle(-4, -3, 1, 2)), { x: -3, y: -1 })
   test.same(new Rectangle(2, 2).signedDistance(new Rectangle(1, 1, 2, 2)), { x:0, y: 0 })
 
+  test.same(new Rectangle().signedGreatestDistance(new Rectangle(4, 3, 0, 0)), { x: 4, y: 3 })
+  test.same(new Rectangle().signedGreatestDistance(new Rectangle(-4, -3, 1, 2)), { x: -4, y: -2 })
+  test.same(new Rectangle(1, 1, 2, 2).signedGreatestDistance(new Rectangle(4, 4)), { x: 0, y: 0 })
+  
   test.end()
 })
 
@@ -136,7 +140,7 @@ tap.test('misc', test => {
   test.same(new Rectangle().inflate(1), new Rectangle(-1, -1, 3, 3))
   test.same(new Rectangle().inflate({ top: 1, right: 2, bottom: 3, left: 4 }), new Rectangle(-4, -1, 7, 5))
 
-  test.equal(new Rectangle().toString(), 'Bounds{ x: 0, y: 0, width: 1, height:1 }')
+  test.equal(new Rectangle().toString(), 'Rectangle{ x: 0, y: 0, width: 1, height:1 }')
 
   test.end()
 })
