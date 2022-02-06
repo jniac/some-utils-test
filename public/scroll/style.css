@@ -1,0 +1,41 @@
+@import url(../common/style.css);
+
+body {
+  /* display: flex; */
+}
+section {
+  flex: 0 0 100vw;
+}
+
+section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+section:nth-child(2n) {
+  background-color: #eee;
+}
+section:nth-child(3) {
+  background-color: #515151;
+  height: 50vh;
+  flex: 0 0 150vw;
+}
+
+#lol {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: crimson;
+  top: calc(50% - 100px);
+  left: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+}
