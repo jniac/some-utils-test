@@ -13,7 +13,8 @@ const addJsExtension = str => str.replace(/(import|export .* from\s+['"])(.*)(['
 
 const main = async () => {
 
-  await spawn(`tsc --project tsconfig-build.json`)
+  await spawn(`tsc --project scripts/tsconfig/tsconfig-geom.json`)
+  await spawn(`tsc --project scripts/tsconfig/tsconfig-math.json`)
 
   for await (const file of walk('public/some-utils')) {
     if (file.endsWith('.js')) {
