@@ -11,5 +11,5 @@
     "baseUrl": "src",
     "outDir": "dist"
   },
-  "include": ["src/some-utils/geom/Interval.ts"]
+  "include": ["src"]
 }

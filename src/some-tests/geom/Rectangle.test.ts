@@ -6,7 +6,7 @@ tap.test('constructor, set', test => {
   test.same(new Rectangle(), { x: 0, y: 0, width: 1, height: 1 })
   test.same(new Rectangle({}), { x: 0, y: 0, width: 1, height: 1 })
   test.same(new Rectangle(1, 2, 3, 4), { x: 1, y: 2, width: 3, height: 4 })
-  test.same(new Rectangle(1, 2, 3, 4, 'collapse'), { x: 1, y: 2, width: 3, height: 4 })
+  test.same(new Rectangle(1, 2, 3, 4, Rectangle.DegenerateMode.Collapse), { x: 1, y: 2, width: 3, height: 4 })
   test.same(new Rectangle(12, 13), { x: 0, y: 0, width: 12, height: 13 })
   test.same(new Rectangle({ xMin: 1, yMin: 2, xMax: 4, yMax: 6 }), { x: 1, y: 2, width: 3, height: 4 })
   
@@ -48,12 +48,12 @@ tap.test('RectangleDegenerateMode', test => {
   // collapse is the default mode
   test.same(new Rectangle({ xMin: 10 }), { x: 5.5, y: 0, width: 0, height: 1 })
   test.same(new Rectangle({ yMin: 10 }), { x: 0, y: 5.5, width: 1, height: 0 })
-  test.same(new Rectangle(-4, -4, 'collapse'), new Rectangle(-2, -2, 0, 0))
+  test.same(new Rectangle(-4, -4, Rectangle.DegenerateMode.Collapse), new Rectangle(-2, -2, 0, 0))
 
-  test.same(new Rectangle({ xMin: 10 }, 'swap'), { x: 1, y: 0, width: 9, height: 1 })
-  test.same(new Rectangle({ yMin: 10 }, 'swap'), { x: 0, y: 1, width: 1, height: 9 })
+  test.same(new Rectangle({ xMin: 10 }, Rectangle.DegenerateMode.Swap), { x: 1, y: 0, width: 9, height: 1 })
+  test.same(new Rectangle({ yMin: 10 }, Rectangle.DegenerateMode.Swap), { x: 0, y: 1, width: 1, height: 9 })
 
-  test.same(new Rectangle(-3, -4, 'ignore'), { x: 0, y: 0, width: -3, height: -4 })
+  test.same(new Rectangle(-3, -4, Rectangle.DegenerateMode.Ignore), { x: 0, y: 0, width: -3, height: -4 })
   
   test.end()
 })

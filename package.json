@@ -8,12 +8,14 @@
   "scripts": {
     "test": "tap --ts",
     "build": "scripts/build.mjs",
-    "start": "scripts/dev.mjs"
+    "start": "scripts/dev.mjs",
+    "postinstall": "git submodule init\ngit submodule update\ncd src/some-utils\ngit checkout main"
   },
   "dependencies": {
     "@types/tap": "^15.0.5",
     "chalk": "4.1.2",
     "chokidar": "^3.5.3",
+    "serve": "^13.0.2",
     "tap": "^15.1.6",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5"
