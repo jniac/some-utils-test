@@ -1,0 +1,11 @@
+@import url(../common/style.css);
+
+body {
+  padding: 64px;
+}
+
+svg {
+  border: solid 1px #0003;
+  font-size: 10px;
+  user-select: none;
+}

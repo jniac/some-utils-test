@@ -7,7 +7,19 @@ const kebabCase = str => (str
   .toLowerCase()
 )
 
-const svg = document.querySelector('svg')
+const noop = () => {}
+
+const safeAssign = (destination, source) => {
+  for (const key in source) {
+    const value = source[key]
+    if (value === undefined) {
+      continue
+    }
+    destination[key] = value
+  }
+}
+
+export const svg = document.querySelector('svg')
 const info = {
   frame: 0,
   time: 0,
@@ -46,7 +58,9 @@ window.addEventListener('pointerup', () => {
 })
 
 /**
- *
+ * - `undefined` has no effect.
+ * - `null` remove the attribute
+ * - any other value set the attribute
  * @param {SVGElement} element
  * @param {Record<string, any>} props
  */
@@ -56,10 +70,21 @@ const setAttributes = (element, {
 }) => {
   if (innerHTML && element.innerHTML !== innerHTML) element.innerHTML = innerHTML
   for (const [key, value] of Object.entries(props)) {
-    element.setAttributeNS(null, kebabCase(key), value)
+    if (value !== undefined && value !== null) {
+      element.setAttributeNS(null, kebabCase(key), value)
+    }
+    else if (value === null) {
+      element.removeAttributeNS(null, kebabCase(key))
+    }
   }
 }
 
+/**
+ * Create an svg node.
+ * @param {string} type 
+ * @param {any} param1 
+ * @returns 
+ */
 export const create = (type, {
   parent = svg,
   ...props
@@ -67,10 +92,22 @@ export const create = (type, {
   const element = document.createElementNS('http://www.w3.org/2000/svg', type)
   parent.append(element)
   setAttributes(element, props)
-  const update = props => setAttributes(element, props)
+  const update = props => {
+    setAttributes(element, props)
+    safeAssign(instance.props, props)
+  }
+  const destroy = () => {
+    element.remove()
+    instance.element = null
+    instance.update = noop
+    instance.destroy = noop
+    instance.props = {}
+  }
   const instance = {
+    props,
     element,
     update,
+    destroy,
   }
   return instance
 }

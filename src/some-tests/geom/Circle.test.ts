@@ -40,24 +40,35 @@ tap.test('contains', test => {
 
 tap.test('intersections', test => {
 
-  test.equal(Circle.intersectsCircleCircle([4, 0, 2], [14, 0, 1]), false)
-  test.equal(Circle.intersectsCircleCircle([4, 0, 2], [14, 0, 8]), true)
+  test.equal(Circle.unitCircleCircleIntersection(1, 3), null)
+  test.same(Circle.unitCircleCircleIntersection(1.5, 1.5), { u: 0.3333333333333333, v: 0.9428090415820634 })
 
+  test.equal(Circle.circleCircleIntersects([4, 0, 2], [14, 0, 1]), false)
+  test.equal(Circle.circleCircleIntersects([4, 0, 2], [14, 0, 8]), true)
+
+  test.equal(Circle.circleCircleStatus([0, 0, 1], [9, 0, 1]), 'APART')
+  test.equal(Circle.circleCircleStatus([0, 0, 2], [1, 0, 2]), 'TOUCHING')
+  test.equal(Circle.circleCircleStatus([0, 0, 1], [0, 0, 2]), 'CIRCLE2_CONTAINS_CIRCLE1')
+  test.equal(Circle.circleCircleStatus([0, 0, 2], [0, 0, 1]), 'CIRCLE1_CONTAINS_CIRCLE2')
+
+  test.equal(Circle.circleCircleIntersects([0, 0, 1], [9, 0, 1]), false)
+  test.equal(Circle.circleCircleIntersects([0, 0, 2], [1, 0, 2]), true)
+  test.equal(Circle.circleCircleIntersects([0, 0, 1], [0, 0, 2]), false)
+  test.equal(Circle.circleCircleIntersects([0, 0, 2], [0, 0, 1]), false)
+  
   // 0 intersction
-  test.same(Circle.intersectionCircleCircle([-10, 3, 1], [6, 23, 4]), [])
+  test.same(Circle.circleCircleIntersection([-10, 3, 1], [6, 23, 4]), [])
+  test.same(Circle.circleCircleIntersection([0, 0, 1], [0, 0, 2]), [])
+  test.same(Circle.circleCircleIntersection([0, 0, 2], [0, 0, 1]), [])
 
   // 1 intersction
-  test.same(Circle.intersectionCircleCircle([-1, 0, 1], [1, 0, 1]), [{ x: 0, y: 0 }])
+  test.same(Circle.circleCircleIntersection([-1, 0, 1], [1, 0, 1]), [{ x: 0, y: 0 }])
 
   // 2 intersections
   const A = new Circle(2, 2, Math.sqrt(2))
   const B = new Circle(5, 1, Math.sqrt(2) * 2)
-  test.equal(A.intersectsCircle(B), true)
-  test.same(A.intersectionCircle(B), [{ x: 3, y: 2.9999999999999996 }, { x: 2.2, y: 0.6000000000000001 }])
-
-
-  test.equal(Circle.intersectionUnitCircleCircle(1, 3), null)
-  test.same(Circle.intersectionUnitCircleCircle(1.5, 1.5), { u: 0.3333333333333333, v: 0.9428090415820634 })
+  test.equal(A.circleIntersects(B), true)
+  test.same(A.circleIntersection(B), [{ x: 3, y: 2.9999999999999996 }, { x: 2.2, y: 0.6000000000000001 }])
 
   test.end()
 })
