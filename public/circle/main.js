@@ -22,13 +22,15 @@ const createCircle = ({ x, y, r, color, name }) => {
     circle.update({ cx: x, cy: y, r, stroke: color })
     text.update({ x, y })
   }
-  return {
+  const instance = {
     update,
-    get circle() {
-      const { cx, cy, r } = circle.props
-      return new Circle(cx, cy, r)
-    }
+    get x() { return circle.props.cx },
+    get y() { return circle.props.cy },
+    get r() { return circle.props.r },
+    get circle() { return Circle.ensure(instance)},
+    get point() { return Point.ensure(instance) },
   }
+  return instance
 }
 
 const c1 = createCircle({
@@ -47,18 +49,35 @@ const c2 = createCircle({
   color: 'red',
 })
 
-const intersections = []
+const temp = []
 
 const update = () => {
   document.querySelector('footer p').innerHTML = Circle.circleCircleStatus(c1.circle, c2.circle)
-  intersections.forEach(i => i.destroy())
-  intersections.length = 0
-  const I = Circle.circleCircleIntersection(c1.circle, c2.circle)
-  intersections.push(...I.map(i => {
-    return create('circle', {
-      cx: i.x,
-      cy: i.y,
-      r: 3,
+
+  const intersectionPoints = Circle.circleCircleIntersection(c1.circle, c2.circle)
+  const tangentPoints = Circle.circleTangentPoint(c1.circle, c2.circle)
+  
+  temp.forEach(i => i.destroy())
+  temp.length = 0
+  temp.push(...[...intersectionPoints, ...tangentPoints].map(p => {
+    return create('circle', { cx: p.x, cy: p.y, r: 3 })
+  }))
+  temp.push(...tangentPoints.map(p => {
+    return create('line', {
+      x1: p.x, 
+      y1: p.y,
+      x2: c2.circle.x,
+      y2: c2.circle.y,
+      stroke: 'black',
+    })
+  }))
+  temp.push(...c1.circle.tangentAnglePoint(c2.circle).map(p => {
+    return create('line', {
+      x1: c1.x,
+      y1: c1.y,
+      x2: c1.x + p.x * 20,
+      y2: c1.y + p.y * 20,
+      stroke: 'black',
     })
   }))
 }
